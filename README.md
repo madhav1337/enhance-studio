@@ -2,9 +2,10 @@
 
 **A local, privacy-first web app that batch-enhances your photos, scans, newspaper clippings and book pages — drag, drop, download.**
 
-[![Python](https://img.shields.io/badge/Python-3.9%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![CI](https://github.com/madhav1337/enhance-studio/actions/workflows/ci.yml/badge.svg)](https://github.com/madhav1337/enhance-studio/actions/workflows/ci.yml)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![Flask](https://img.shields.io/badge/Flask-3.x-000000?logo=flask&logoColor=white)](https://flask.palletsprojects.com/)
-[![OpenCV](https://img.shields.io/badge/OpenCV-4.x-5C3EE8?logo=opencv&logoColor=white)](https://opencv.org/)
+[![OpenCV](https://img.shields.io/badge/OpenCV-4.x%20%7C%205.x-5C3EE8?logo=opencv&logoColor=white)](https://opencv.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
 Enhance Studio wraps four purpose-built image-enhancement pipelines behind one clean browser UI. Everything runs **100% on your own machine** — no uploads to any server, no accounts, no internet required after install. Point it at a folder of phone photos of old prints, faded newspaper clippings, or book pages, and get clean, natural, higher-quality results back.
@@ -111,10 +112,24 @@ enhance-studio/
 │   └── book.py
 ├── templates/index.html
 ├── static/{app.js, style.css}
+├── tests/smoke_test.py # runs every pipeline on a synthetic image
+├── .github/workflows/  # CI (installs deps, runs the smoke test)
 ├── requirements.txt
 ├── run.bat             # Windows launcher
 └── LICENSE
 ```
+
+## ✅ Testing
+
+A lightweight smoke test runs a synthetic image through all four pipelines and
+checks each produces a valid output:
+
+```bash
+python tests/smoke_test.py
+```
+
+It runs automatically on every push via [GitHub Actions](.github/workflows/ci.yml)
+(Python 3.11 and 3.12) — see the **CI** badge at the top.
 
 ## 🔒 Security & privacy
 

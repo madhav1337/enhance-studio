@@ -1,5 +1,13 @@
-"""Quick end-to-end check: run a synthetic image through all four pipelines."""
-import os, tempfile
+"""Quick end-to-end check: run a synthetic image through all four pipelines.
+
+Run from the repo root:  python tests/smoke_test.py
+Exits 0 if every pipeline produces a valid image, 1 otherwise.
+"""
+import os, sys, tempfile
+
+# make the repo root importable when run as `python tests/smoke_test.py`
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 import numpy as np
 from PIL import Image, ImageDraw
 

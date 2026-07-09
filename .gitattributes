@@ -1,0 +1,10 @@
+# Normalise line endings: text files stored as LF in the repo, checked out
+# native on each OS. Keeps diffs clean regardless of contributor platform.
+* text=auto eol=lf
+
+# Binary assets — never touch these.
+*.png binary
+*.ico binary
+*.jpg binary
+*.jpeg binary
+*.webp binary
