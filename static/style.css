@@ -241,6 +241,18 @@ body {
 }
 .link:hover { color: #fff; border-color: #fff; }
 
+/* credit ------------------------------------------------------------------ */
+.credit {
+  margin-top: 56px; padding-top: 24px; text-align: center;
+  font-size: 13px; color: var(--muted); border-top: 1px solid var(--stroke);
+}
+.credit a {
+  font-weight: 700; text-decoration: none; border-bottom: 1px solid rgba(139,147,255,.4);
+  background: var(--grad); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.credit a:hover { border-color: var(--accent); }
+.credit .heart { color: #ff6b81; }
+
 @media (max-width: 560px) {
   .app { padding: 28px 16px 64px; }
   .hero { gap: 14px; margin-bottom: 30px; }

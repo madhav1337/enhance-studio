@@ -169,3 +169,7 @@ It runs automatically on every push via [GitHub Actions](.github/workflows/ci.ym
 ## 📄 License
 
 Released under the [MIT License](LICENSE) — free to use, modify and share.
+
+---
+
+Made with ♥ by [**madhav1337**](https://github.com/madhav1337)
