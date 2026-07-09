@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Enhance Studio — local photo & scan enhancer</title>
+<meta name="description" content="A local, privacy-first web app that batch-enhances photos, scans, newspaper clippings and book pages. Python · Flask · OpenCV.">
+<style>
+  :root{
+    --bg0:#0b0e14; --bg1:#10141d; --card:#161b22; --border:#252c3c;
+    --text:#e6edf3; --muted:#8b949e; --accent:#818cf8; --accent2:#6366f1; --star:#f5b050;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; color:var(--text); font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:linear-gradient(180deg,var(--bg0),var(--bg1)); min-height:100vh;
+  }
+  a{color:var(--accent); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1060px; margin:0 auto; padding:0 22px}
+  header{padding:64px 0 24px; text-align:center}
+  .icon{width:76px;height:76px;border-radius:20px;background:#1e2434;border:1px solid var(--accent2);
+        display:inline-flex;align-items:center;justify-content:center;font-size:38px;color:var(--star)}
+  h1{font-size:clamp(34px,6vw,56px); margin:18px 0 6px; letter-spacing:-.5px}
+  .tag{color:var(--muted); font-size:clamp(16px,2.4vw,21px); margin:0 auto; max-width:640px}
+  .cta{margin:30px 0 8px; display:flex; gap:14px; justify-content:center; flex-wrap:wrap}
+  .btn{padding:12px 22px; border-radius:11px; font-weight:600; border:1px solid var(--border)}
+  .btn.primary{background:var(--accent2); border-color:var(--accent2); color:#fff}
+  .btn.primary:hover{background:#4f52e0; text-decoration:none}
+  .btn.ghost{background:#141925; color:var(--text)}
+  .btn.ghost:hover{border-color:var(--accent); text-decoration:none}
+  .shot{margin:34px auto 0; max-width:100%; border-radius:16px; border:1px solid var(--border); display:block}
+  .note{max-width:720px;margin:20px auto 0;color:var(--muted);font-size:14.5px;
+        background:#12151e;border:1px solid var(--border);border-radius:12px;padding:14px 18px}
+  section{padding:46px 0}
+  h2{font-size:26px; margin:0 0 22px; letter-spacing:-.3px}
+  .grid{display:grid; gap:18px}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  .cardbox{background:var(--card); border:1px solid var(--border); border-radius:14px; padding:20px}
+  .cardbox h3{margin:0 0 6px; font-size:17px}
+  .cardbox .accent{color:var(--accent); font-size:13.5px; font-weight:600; margin:0 0 8px}
+  .cardbox p{margin:0; color:var(--muted); font-size:14px}
+  .pill{display:inline-block; padding:6px 12px; margin:4px 6px 0 0; border-radius:999px;
+        background:#141925; border:1px solid var(--border); color:var(--text); font-size:13.5px}
+  ul.feat{list-style:none; padding:0; margin:0; display:grid; gap:12px}
+  ul.feat li{padding-left:28px; position:relative; color:var(--muted)}
+  ul.feat li::before{content:"✓"; position:absolute; left:0; color:var(--accent); font-weight:700}
+  ul.feat li b{color:var(--text); font-weight:600}
+  pre{background:#0c1017; border:1px solid var(--border); border-radius:12px; padding:16px 18px;
+      overflow-x:auto; font-size:13.5px; color:#cbd5e1}
+  footer{padding:40px 0 60px; text-align:center; color:var(--muted); font-size:14px; border-top:1px solid var(--border)}
+  @media(max-width:760px){ .g2,.g4{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="icon">✦</div>
+    <h1>Enhance Studio</h1>
+    <p class="tag">A local, privacy-first web app that batch-enhances photos, scans, newspaper clippings and book pages — drag, drop, download.</p>
+    <div class="cta">
+      <a class="btn primary" href="https://github.com/madhav1337/enhance-studio">View on GitHub</a>
+      <a class="btn ghost" href="https://github.com/madhav1337/enhance-studio#-getting-started">Run it locally</a>
+    </div>
+    <img class="shot" src="screenshot.png" alt="Enhance Studio interface">
+    <p class="note">ℹ️ This is a <b>showcase page</b>. Enhance Studio is a Python/Flask app that runs its
+      OpenCV image processing on your own machine — so it stays fully private and works offline.
+      Grab the code and launch it locally in under a minute.</p>
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <h2>Why it's nice</h2>
+    <ul class="feat">
+      <li><b>Drag &amp; drop, one or many</b> — queue a whole batch; each result appears with live status.</li>
+      <li><b>Before / after wipe slider</b> — drag to compare original vs enhanced, pixel-for-pixel.</li>
+      <li><b>Four specialised pipelines</b> — the right tool for photos, extractions, newspapers and book pages.</li>
+      <li><b>Download one, or all as a ZIP.</b></li>
+      <li><b>Non-destructive &amp; private</b> — originals are never touched; nothing leaves your computer.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="pipelines">
+  <div class="wrap">
+    <h2>Four pipelines</h2>
+    <div class="grid g4">
+      <div class="cardbox"><h3>Photo Quality</h3><p class="accent">upscale · denoise · sharpen</p><p>Cleaner, higher-resolution photos with composition, colours, faces and B&amp;W preserved exactly — no crop, no AI invention.</p></div>
+      <div class="cardbox"><h3>Photo Extract</h3><p class="accent">crop · deskew · enhance</p><p>For phone photos of printed photos on a table: detects the print, perspective-corrects and crops it — never cutting the subject.</p></div>
+      <div class="cardbox"><h3>Newspaper</h3><p class="accent">natural archival restore</p><p>Auto-crop, deskew and text-edge sharpening so clippings read like a clean flatbed scan — paper texture &amp; colour kept.</p></div>
+      <div class="cardbox"><h3>Book / Document</h3><p class="accent">cover or text page</p><p>Segments a cover onto a clean white canvas, or flat-field-whitens and sharpens a text page. Auto-picks the mode.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <div class="grid g2">
+      <div>
+        <h2>Tech stack</h2>
+        <div>
+          <span class="pill">Python</span><span class="pill">Flask</span><span class="pill">OpenCV</span>
+          <span class="pill">NumPy</span><span class="pill">Pillow</span><span class="pill">Vanilla JS/CSS</span>
+        </div>
+        <p style="color:var(--muted);margin-top:16px">A small Flask server exposes a uniform <code>enhance(pipeline, path, options)</code> API over four pure image-processing engines. The front end handles the batch queue, wipe-slider comparison and ZIP bundling — no build step.</p>
+      </div>
+      <div>
+        <h2>Run it in a minute</h2>
+        <pre>git clone https://github.com/madhav1337/enhance-studio.git
+cd enhance-studio
+python -m venv .venv
+# Windows: .venv\Scripts\activate
+# macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+python app.py   # opens http://127.0.0.1:5000</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    Built with Python, Flask &amp; OpenCV · MIT licensed ·
+    <a href="https://github.com/madhav1337/enhance-studio">github.com/madhav1337/enhance-studio</a>
+  </div>
+</footer>
+</body>
+</html>
