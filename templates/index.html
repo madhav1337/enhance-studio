@@ -5,16 +5,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Enhance Studio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✨</text></svg>">
 </head>
 <body>
+  <div class="bg-aurora" aria-hidden="true"></div>
   <div class="app">
     <header class="hero">
       <div class="hero-mark">✨</div>
-      <div>
-        <h1>Enhance Studio</h1>
-        <p class="sub">Drag in your photos &mdash; pick a look &mdash; download the result. Originals are never touched.</p>
+      <div class="hero-text">
+        <h1>Enhance&nbsp;Studio</h1>
+        <p class="sub">Drop in your photos &mdash; pick a look &mdash; download the result. Bulk &amp; folders welcome. Originals are never touched.</p>
       </div>
     </header>
 
@@ -25,13 +28,23 @@
     </section>
 
     <section class="step">
-      <h2><span class="n">2</span> Add photos</h2>
+      <h2><span class="n">2</span> Add photos <span class="pill-hint">bulk &amp; folders supported</span></h2>
       <div id="drop" class="dropzone" tabindex="0">
         <input id="file-input" type="file" accept="image/*" multiple hidden>
+        <input id="folder-input" type="file" webkitdirectory directory multiple hidden>
         <div class="dz-inner">
-          <div class="dz-icon">⬆</div>
-          <p class="dz-title">Drop images here</p>
-          <p class="dz-hint">or <button type="button" id="browse" class="link">browse</button> &middot; JPG, PNG, WEBP, TIFF, BMP</p>
+          <div class="dz-icon">
+            <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 16V4"/><path d="M6 10l6-6 6 6"/><path d="M4 20h16"/>
+            </svg>
+          </div>
+          <p class="dz-title">Drop images or a whole folder here</p>
+          <p class="dz-hint">
+            <button type="button" id="browse" class="link">browse files</button>
+            <span class="dot">&middot;</span>
+            <button type="button" id="browse-folder" class="link">pick a folder</button>
+            <span class="dot">&middot;</span> JPG, PNG, WEBP, TIFF, BMP
+          </p>
         </div>
       </div>
     </section>
@@ -40,9 +53,16 @@
       <div class="results-head">
         <h2><span class="n">3</span> Results</h2>
         <div class="results-actions">
-          <button id="download-all" class="btn" disabled>⬇ Download all (ZIP)</button>
+          <button id="download-all" class="btn" disabled>
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/><path d="M12 15V3"/></svg>
+            Download all (ZIP)
+          </button>
           <button id="clear" class="btn ghost">Clear</button>
         </div>
+      </div>
+      <div id="batch-bar" class="batch" hidden>
+        <div class="batch-track"><div id="batch-fill" class="batch-fill"></div></div>
+        <span id="batch-label" class="batch-label">0 / 0</span>
       </div>
       <div id="results" class="results"></div>
     </section>

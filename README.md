@@ -10,23 +10,25 @@
 
 Enhance Studio wraps four purpose-built image-enhancement pipelines behind one clean browser UI. Everything runs **100% on your own machine** — no uploads to any server, no accounts, no internet required after install. Point it at a folder of phone photos of old prints, faded newspaper clippings, or book pages, and get clean, natural, higher-quality results back.
 
-![Enhance Studio](docs/screenshot.png?v=2)
+### ▶ [Try the live demo](https://enhance-studio.onrender.com/) &nbsp;·&nbsp; [Project page](https://madhav1337.github.io/enhance-studio/)
+
+![Enhance Studio](docs/screenshot.png?v=3)
 
 ## 🔗 Links
 
+- **▶ Live demo:** https://enhance-studio.onrender.com/ &nbsp;(free host — first load may take ~30 s to wake)
 - **Project page (GitHub Pages):** https://madhav1337.github.io/enhance-studio/
 - **Source code:** https://github.com/madhav1337/enhance-studio
 - **Run it locally:** see [Getting started](#-getting-started) below
 
-> ℹ️ The project page above is a static showcase. Enhance Studio is a local Python/Flask
-> app that does its image processing on your machine, so the actual enhancing runs when
-> you launch it locally (or deploy it to a Python host such as Render or Hugging Face Spaces).
+> ℹ️ The live demo processes images on the server, so it's best for *trying it out*. For full
+> privacy — images never leaving your machine — run it locally (it's a Python/Flask app).
 
 ---
 
 ## ✨ Features
 
-- **Drag & drop, one or many** — queue a whole batch; the page processes them one by one and shows live status.
+- **Bulk & folder upload** — drop dozens of images, browse-select many, or pick a **whole folder**; a progress bar tracks the batch as it enhances.
 - **Before / after wipe slider** — drag to compare the original and the enhanced result pixel-for-pixel.
 - **Four specialised pipelines** (see below) — pick the right tool for each kind of image.
 - **Per-image options** — e.g. optional auto-rotate, or force a book "cover" vs "text page" mode.

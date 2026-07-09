@@ -21,6 +21,7 @@ from pipeline_src import quality, website, news, book
 PIPELINES = [
     {
         "id": "quality",
+        "icon": "🪄",
         "name": "Photo Quality",
         "tagline": "Upscale + denoise + sharpen. Nothing else changes.",
         "desc": "Makes the same photo higher-resolution and cleaner while preserving "
@@ -29,6 +30,7 @@ PIPELINES = [
     },
     {
         "id": "website",
+        "icon": "🖼️",
         "name": "Photo Extract",
         "tagline": "Scanner-style crop + deskew + natural enhance.",
         "desc": "For phone photos of printed photos/clippings on a table. Detects the "
@@ -45,6 +47,7 @@ PIPELINES = [
     },
     {
         "id": "news",
+        "icon": "📰",
         "name": "Newspaper",
         "tagline": "Natural archival restoration.",
         "desc": "For newspaper-clipping scans. Auto-crop, deskew, gentle denoise and "
@@ -54,6 +57,7 @@ PIPELINES = [
     },
     {
         "id": "book",
+        "icon": "📖",
         "name": "Book Cover / Page",
         "tagline": "Segment cover onto white, or whiten a text page.",
         "desc": "Document / book pipeline. Covers and photos are segmented onto a clean "

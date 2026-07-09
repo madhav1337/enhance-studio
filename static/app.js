@@ -7,16 +7,23 @@ const els = {
   options: document.getElementById("options"),
   drop: document.getElementById("drop"),
   fileInput: document.getElementById("file-input"),
+  folderInput: document.getElementById("folder-input"),
   browse: document.getElementById("browse"),
+  browseFolder: document.getElementById("browse-folder"),
   resultsSection: document.getElementById("results-section"),
   results: document.getElementById("results"),
   downloadAll: document.getElementById("download-all"),
   clear: document.getElementById("clear"),
+  batchBar: document.getElementById("batch-bar"),
+  batchFill: document.getElementById("batch-fill"),
+  batchLabel: document.getElementById("batch-label"),
 };
 
 let selected = null;          // pipeline id
 let optionState = {};         // current option values for the selected pipeline
 const outputs = [];           // { output_id, download_name } for successful results
+let batchTotal = 0;           // images queued this session
+let batchDone = 0;            // images finished (ok or failed)
 
 // --------------------------------------------------------------------- picker
 function renderPicker() {
@@ -26,6 +33,7 @@ function renderPicker() {
     card.className = "card";
     card.dataset.id = p.id;
     card.innerHTML =
+      (p.icon ? `<div class="cicon">${escapeHtml(p.icon)}</div>` : "") +
       `<div class="cname">${escapeHtml(p.name)}</div>` +
       `<div class="ctag">${escapeHtml(p.tagline)}</div>` +
       `<div class="cdesc">${escapeHtml(p.desc)}</div>`;
@@ -94,6 +102,7 @@ function renderOptions(p) {
 // ------------------------------------------------------------------ dropzone
 function wireDropzone() {
   els.browse.addEventListener("click", (e) => { e.stopPropagation(); els.fileInput.click(); });
+  els.browseFolder.addEventListener("click", (e) => { e.stopPropagation(); els.folderInput.click(); });
   els.drop.addEventListener("click", () => els.fileInput.click());
   els.drop.addEventListener("keydown", (e) => {
     if (e.key === "Enter" || e.key === " ") { e.preventDefault(); els.fileInput.click(); }
@@ -101,6 +110,10 @@ function wireDropzone() {
   els.fileInput.addEventListener("change", () => {
     addFiles(els.fileInput.files);
     els.fileInput.value = "";
+  });
+  els.folderInput.addEventListener("change", () => {
+    addFiles(els.folderInput.files);
+    els.folderInput.value = "";
   });
   ["dragenter", "dragover"].forEach((ev) =>
     els.drop.addEventListener(ev, (e) => { e.preventDefault(); els.drop.classList.add("drag"); }));
@@ -117,11 +130,22 @@ function addFiles(fileList) {
     /\.(jpe?g|png|webp|tiff?|bmp)$/i.test(f.name));
   if (!files.length) return;
   els.resultsSection.hidden = false;
+  batchTotal += files.length;
+  updateBatch();
   files.forEach((file) => {
     const card = makeCardShell(file);
     els.results.prepend(card);
     enqueue(() => process(file, card));
   });
+}
+
+function updateBatch() {
+  if (batchTotal === 0) { els.batchBar.hidden = true; return; }
+  els.batchBar.hidden = false;
+  const pct = Math.round((batchDone / batchTotal) * 100);
+  els.batchFill.style.width = pct + "%";
+  const verb = batchDone >= batchTotal ? "done" : "enhancing…";
+  els.batchLabel.textContent = `${batchDone} / ${batchTotal} ${verb}`;
 }
 
 // -------------------------------------------------------------- process queue
@@ -143,6 +167,9 @@ async function process(file, card) {
     updateDownloadAll();
   } catch (err) {
     renderError(card, err.message || String(err));
+  } finally {
+    batchDone += 1;
+    updateBatch();
   }
 }
 
@@ -236,6 +263,8 @@ async function downloadAll() {
 function clearResults() {
   els.results.innerHTML = "";
   outputs.length = 0;
+  batchTotal = 0; batchDone = 0;
+  updateBatch();
   els.resultsSection.hidden = true;
   updateDownloadAll();
 }
