@@ -10,7 +10,7 @@
 
 Enhance Studio wraps four purpose-built image-enhancement pipelines behind one clean browser UI. Everything runs **100% on your own machine** — no uploads to any server, no accounts, no internet required after install. Point it at a folder of phone photos of old prints, faded newspaper clippings, or book pages, and get clean, natural, higher-quality results back.
 
-![Enhance Studio](docs/screenshot.png)
+![Enhance Studio](docs/screenshot.png?v=2)
 
 ## 🔗 Links
 
