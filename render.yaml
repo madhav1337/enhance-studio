@@ -1,0 +1,14 @@
+# Render Blueprint — one-click deploy of Enhance Studio.
+# On https://render.com : New + → Blueprint → connect this repo → Apply.
+services:
+  - type: web
+    name: enhance-studio
+    runtime: python
+    plan: free                       # free tier sleeps when idle, wakes on request
+    buildCommand: "pip install -r requirements.txt gunicorn"
+    startCommand: "gunicorn app:app -b 0.0.0.0:$PORT -w 1 -t 120"
+    envVars:
+      - key: MAX_UPLOAD_MB           # smaller cap for a shared public instance
+        value: "25"
+      - key: STUDIO_NO_BROWSER       # never try to open a browser on the server
+        value: "1"

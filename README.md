@@ -92,6 +92,26 @@ Then open **http://127.0.0.1:5000** (it opens automatically). On Windows you can
 
 To stop the server, close its terminal window (or press `Ctrl+C`).
 
+## 🌐 Deploy a live demo
+
+Enhance Studio can also run as a hosted web app so anyone can try it in the browser.
+The image processing runs on the server, so a public demo is best for *trying it out* —
+for full privacy, run it locally (above).
+
+**Render (easiest — deploys straight from this repo):**
+
+1. On **[render.com](https://render.com)** → **New + → Blueprint** → connect this repo.
+2. Render reads [`render.yaml`](render.yaml) and provisions a **free** web service running `gunicorn`.
+3. When the build finishes, your app is live at `https://<name>.onrender.com`.
+
+> Free instances sleep after ~15 min idle and cold-start in ~30–60 s.
+
+**Hugging Face Spaces / any Docker host:** a [`Dockerfile`](Dockerfile) is included. On Spaces,
+create a Space with **SDK: Docker**, add it as a git remote and push; the container serves on
+port `7860` (Spaces' default), while other hosts inject `$PORT` and it adapts.
+
+Both hosted paths set `MAX_UPLOAD_MB=25` to keep a shared instance within memory.
+
 ## 📖 Usage
 
 1. Pick a pipeline (Photo Quality, Photo Extract, Newspaper, or Book / Document).
@@ -140,9 +160,9 @@ It runs automatically on every push via [GitHub Actions](.github/workflows/ci.ym
 
 ## 🗺️ Roadmap ideas
 
+- [x] Dockerfile + Render blueprint for one-click deploy
 - [ ] Server-side batch queue with progress bar
 - [ ] Optional pipeline parameter sliders in the UI
-- [ ] Dockerfile for one-command setup
 
 ## 📄 License
 

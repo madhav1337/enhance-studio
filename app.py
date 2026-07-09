@@ -34,7 +34,10 @@ ALLOWED_EXT = {".jpg", ".jpeg", ".png", ".webp", ".tif", ".tiff", ".bmp"}
 SAFE_NAME = re.compile(r"[^A-Za-z0-9._-]+")
 
 app = Flask(__name__)
-app.config["MAX_CONTENT_LENGTH"] = 128 * 1024 * 1024   # 128 MB per image
+# Per-image upload cap. Defaults to 128 MB for local use; a public/hosted instance
+# can lower it (e.g. MAX_UPLOAD_MB=25) to stay within a small server's memory.
+MAX_UPLOAD_MB = int(os.environ.get("MAX_UPLOAD_MB", "128"))
+app.config["MAX_CONTENT_LENGTH"] = MAX_UPLOAD_MB * 1024 * 1024
 
 
 def _safe_stem(filename):
